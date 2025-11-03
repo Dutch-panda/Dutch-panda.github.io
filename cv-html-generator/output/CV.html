@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Curriculum Vitae</title>
+</head>
+<body>
+    <header>
+        <h1>{{name}}</h1>
+        <p>{{email}}</p>
+        <p>{{phone}}</p>
+        <p>{{address}}</p>
+    </header>
+    <section id="education">
+        <h2>Education</h2>
+        <ul>
+            {{#each education}}
+            <li>{{degree}} in {{field}} from {{institution}} ({{year}})</li>
+            {{/each}}
+        </ul>
+    </section>
+    <section id="work-experience">
+        <h2>Work Experience</h2>
+        <ul>
+            {{#each workExperience}}
+            <li>{{jobTitle}} at {{company}} ({{startYear}} - {{endYear}}): {{description}}</li>
+            {{/each}}
+        </ul>
+    </section>
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+            {{#each skills}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </section>
+    <section id="projects">
+        <h2>Projects</h2>
+        <ul>
+            {{#each projects}}
+            <li>{{projectName}}: {{projectDescription}}</li>
+            {{/each}}
+        </ul>
+    </section>
+    <footer>
+        <p>Generated on {{date}}</p>
+    </footer>
+</body>
+</html>
