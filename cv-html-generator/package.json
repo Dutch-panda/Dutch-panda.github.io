@@ -1,0 +1,22 @@
+{
+  "name": "cv-html-generator",
+  "version": "1.0.0",
+  "description": "A project to generate a CV in HTML format from a JSON file.",
+  "main": "scripts/generate.js",
+  "scripts": {
+    "generate": "node scripts/generate.js"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "ejs": "^3.1.6"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "CV",
+    "HTML",
+    "generator"
+  ],
+  "author": "",
+  "license": "ISC"
+}
