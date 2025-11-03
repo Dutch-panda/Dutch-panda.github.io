@@ -4,7 +4,10 @@ const ejs = require('ejs');
 
 const cvDataPath = path.join(__dirname, '../src/CV.json');
 const templatePath = path.join(__dirname, '../src/template.html');
-const outputPath = path.join(__dirname, '../output/CV.html');
+const outputDir = path.join(__dirname, '../output');
+const outputPath = path.join(outputDir, 'CV.html');
+const outputCssPath = path.join(outputDir, 'styles.css');
+const srcCssPath = path.join(__dirname, '../src/styles.css');
 
 // Read CV data from JSON file
 fs.readFile(cvDataPath, 'utf8', (err, data) => {
@@ -13,7 +16,13 @@ fs.readFile(cvDataPath, 'utf8', (err, data) => {
         return;
     }
 
-    const cvData = JSON.parse(data);
+    let cvData;
+    try {
+        cvData = JSON.parse(data);
+    } catch (e) {
+        console.error('Invalid JSON in CV.json:', e);
+        return;
+    }
 
     // Read HTML template
     fs.readFile(templatePath, 'utf8', (err, template) => {
@@ -23,20 +32,30 @@ fs.readFile(cvDataPath, 'utf8', (err, data) => {
         }
 
         // Render HTML with CV data
-        const htmlOutput = ejs.render(template, { cv: cvData });
+        const htmlOutput = ejs.render(template, { cv: cvData, date: new Date().toLocaleDateString() });
 
-        // Write the output HTML to a file
-        fs.mkdir(path.dirname(outputPath), { recursive: true }, (err) => {
+        // Ensure output dir exists
+        fs.mkdir(outputDir, { recursive: true }, (err) => {
             if (err) {
                 console.error('Error creating output directory:', err);
                 return;
             }
 
+            // Write HTML
             fs.writeFile(outputPath, htmlOutput, (err) => {
                 if (err) {
                     console.error('Error writing output HTML:', err);
                 } else {
                     console.log('CV HTML generated successfully:', outputPath);
+                }
+            });
+
+            // Copy CSS to output
+            fs.copyFile(srcCssPath, outputCssPath, (err) => {
+                if (err) {
+                    console.error('Error copying CSS to output:', err);
+                } else {
+                    console.log('CSS copied to output:', outputCssPath);
                 }
             });
         });

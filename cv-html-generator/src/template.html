@@ -4,49 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Curriculum Vitae</title>
+    <title><%= cv.basics.name %> — CV</title>
 </head>
 <body>
     <header>
-        <h1>{{name}}</h1>
-        <p>{{email}}</p>
-        <p>{{phone}}</p>
-        <p>{{address}}</p>
+        <h1><%= cv.basics.name %></h1>
+        <p><%= cv.basics.email %></p>
+        <p><%= cv.basics.phone %></p>
+        <p><%= cv.basics.location %></p>
     </header>
+
+    <section id="summary">
+        <h2>Summary</h2>
+        <div><%- cv.sections.summary.content %></div>
+    </section>
+
     <section id="education">
         <h2>Education</h2>
         <ul>
-            {{#each education}}
-            <li>{{degree}} in {{field}} from {{institution}} ({{year}})</li>
-            {{/each}}
+            <% (cv.sections.education.items || []).forEach(function(ed){ %>
+                <li><strong><%= ed.studyType %></strong> — <%= ed.area %> at <%= ed.institution %> (<%= ed.date %>)</li>
+            <% }); %>
         </ul>
     </section>
-    <section id="work-experience">
-        <h2>Work Experience</h2>
+
+    <section id="experience">
+        <h2>Experience</h2>
         <ul>
-            {{#each workExperience}}
-            <li>{{jobTitle}} at {{company}} ({{startYear}} - {{endYear}}): {{description}}</li>
-            {{/each}}
+            <% (cv.sections.experience.items || []).forEach(function(ex){ %>
+                <li><strong><%= ex.position %></strong> at <%= ex.company %> — <em><%= ex.date %></em>
+                    <div><%- ex.summary %></div>
+                </li>
+            <% }); %>
         </ul>
     </section>
+
     <section id="skills">
         <h2>Skills</h2>
         <ul>
-            {{#each skills}}
-            <li>{{this}}</li>
-            {{/each}}
+            <% (cv.sections.skills.items || []).forEach(function(s){ %>
+                <li><%= s.name %> — <%= s.description %></li>
+            <% }); %>
         </ul>
     </section>
-    <section id="projects">
-        <h2>Projects</h2>
-        <ul>
-            {{#each projects}}
-            <li>{{projectName}}: {{projectDescription}}</li>
-            {{/each}}
-        </ul>
-    </section>
+
     <footer>
-        <p>Generated on {{date}}</p>
+        <p>Generated on <%= date %></p>
     </footer>
 </body>
 </html>
